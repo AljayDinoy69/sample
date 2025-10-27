@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "b6194c1d-43d9-463c-b00c-d98834e67eff"
+      }
+    },
+    "android": {
+      "package": "com.jhay_d.ersserver"
+    }
+  }
+}
