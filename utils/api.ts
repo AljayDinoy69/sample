@@ -7,33 +7,28 @@ import Constants from 'expo-constants';
 // 2) Expo hostUri-derived LAN IP + port 4000 (dev convenience)
 // 3) Defaults: Android emulator 10.0.2.2, iOS simulator/others localhost
 function resolveBaseUrl() {
+  // First, try the environment variable
   const envUrl = (process.env.EXPO_PUBLIC_API_URL || '').trim();
-  let base = envUrl;
+  if (envUrl) {
+    return envUrl.replace(/\/$/, ''); // Remove trailing slash if present
+  }
 
-  if (!base) {
+  // For development environments
+  if (__DEV__) {
     const anyConstants = Constants as any;
     const hostUri = anyConstants?.expoConfig?.hostUri || anyConstants?.manifest2?.extra?.hostUri || anyConstants?.manifest?.hostUri || '';
     if (hostUri) {
       // hostUri like "192.168.1.5:19000" or "localhost:19000"
       const host = String(hostUri).split(':')[0];
       const resolvedHost = (Platform.OS === 'android' && (host === 'localhost' || host === '127.0.0.1')) ? '10.0.2.2' : host;
-      base = `http://${resolvedHost}:4000`;
+      const port = process.env.PORT || '10000'; // Use PORT from environment or default to 10000
+      return `http://${resolvedHost}:${port}`;
     }
   }
 
-  if (!base) {
-    // Final fallbacks
-    base = Platform.OS === 'android' ? 'http://10.0.2.2:4000' : 'http://localhost:4000';
-  }
-
-  // Ensure Android emulator localhost mapping if someone hardcoded localhost
-  if (Platform.OS === 'android') {
-    base = base.replace('localhost', '10.0.2.2').replace('127.0.0.1', '10.0.2.2');
-  }
-
-  // Normalize: remove trailing slash
-  base = base.replace(/\/$/, '');
-  return base;
+  // Production fallback - this should be overridden by EXPO_PUBLIC_API_URL in production
+  console.warn('Using default API URL. Set EXPO_PUBLIC_API_URL environment variable for production use.');
+  return 'https://ers-server.onrender.com';
 }
 
 export const API_BASE_URL = resolveBaseUrl();
