@@ -32,13 +32,13 @@
     "react-native-screens": "~4.16.0",
     "react-native-share": "^12.2.0",
     "react-native-web": "^0.21.1",
-    "react-redux": "^9.2.0"
+    "react-redux": "^9.2.0",
+    "typescript": "~5.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.1.10",
-    "@types/react-native": "^0.72.8",
-    "typescript": "~5.9.2"
+    "@types/react-native": "^0.72.8"
   },
   "private": true
 }

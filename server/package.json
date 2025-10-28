@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "npm install"
   },
   "dependencies": {
     "cloudinary": "^1.41.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "expo": "^54.0.20",
     "express": "^4.19.2",
     "mongoose": "^8.7.0",
     "morgan": "^1.10.0",
@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
